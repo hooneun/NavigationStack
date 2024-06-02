@@ -31,7 +31,7 @@ struct ContentView: View {
             }
             .navigationTitle("네비게이션 스택")
             .navigationDestination(for: String.self) { product in
-                Text("\(product) has clicked")
+                AppleProductView(product: product, path: $stackPath)
             }
             .navigationDestination(for: Int.self) { _ in
                 Text("넘버가 선택되었습니다.")
@@ -44,6 +44,26 @@ struct ContentView: View {
                     .font(.largeTitle)
                     .bold()
             }
+        }
+    }
+}
+
+struct AppleProductView: View {
+    let product: String
+    @Binding var path: NavigationPath
+
+    var body: some View {
+        VStack(spacing: 20) {
+            Text(product)
+                .font(.largeTitle)
+                .onTapGesture {
+                    path.append("세번째 혹은 더 깊은 Destination")
+                }
+
+            Text("모두 없애버리기")
+                .onTapGesture {
+                    path = .init()
+                }
         }
     }
 }
